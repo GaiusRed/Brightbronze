@@ -1,3 +1,4 @@
+using System;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,7 +17,9 @@ namespace red.gaius.brightbronze.discord.Services
         readonly ILogger<DiscordBot> _logger;
         readonly DiscordSettings _settings;
         readonly DiscordSocketClient _client;
-        public DiscordBot(ILogger<DiscordBot> logger, IOptions<DiscordSettings> settings)
+        public DiscordBot(IServiceProvider services,
+                          ILogger<DiscordBot> logger,
+                          IOptions<DiscordSettings> settings)
         {
             _logger = logger;
             _settings = settings.Value;
@@ -40,7 +43,7 @@ namespace red.gaius.brightbronze.discord.Services
             };
 
             CommandService commandSvc = new CommandService();
-            commandSvc.AddModulesAsync(Assembly.GetEntryAssembly(), null);
+            commandSvc.AddModulesAsync(Assembly.GetEntryAssembly(), services);
             _client.MessageReceived += async (arg) =>
             {
                 var msg = arg as SocketUserMessage;
@@ -49,7 +52,7 @@ namespace red.gaius.brightbronze.discord.Services
                 if (msg.HasCharPrefix(_settings.DefaultPrefix, ref pos) ||
                     msg.HasMentionPrefix(_client.CurrentUser, ref pos))
                     await commandSvc.ExecuteAsync(
-                        new SocketCommandContext(_client, msg), pos, null);
+                        new SocketCommandContext(_client, msg), pos, services);
             };
 
             _client.LoginAsync(TokenType.Bot, _settings.Token);
