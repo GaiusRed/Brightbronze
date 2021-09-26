@@ -7,6 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using red.gaius.brightbronze.discord.Models;
 using red.gaius.brightbronze.discord.Services;
+using red.gaius.brightbronze.core.Models;
+using red.gaius.brightbronze.core.Services;
 
 namespace red.gaius.brightbronze.discord
 {
@@ -27,6 +29,21 @@ namespace red.gaius.brightbronze.discord
                     {
                         config.GetSection("Discord").Bind(discordSettings);
                     });
+            services.AddOptions<CosmosDBSettings>()
+                    .Configure<IConfiguration>((cosmosDBSettings, config) =>
+                    {
+                        config.GetSection("CosmosDB").Bind(cosmosDBSettings);
+                    });
+            services.AddOptions<CacheSettings>()
+                    .Configure<IConfiguration>((cacheSettings, config) =>
+                    {
+                        config.GetSection("Cache").Bind(cacheSettings);
+                    });
+            services.AddOptions<EngineSettings>()
+                    .Configure<IConfiguration>((engineSettings, config) =>
+                    {
+                        config.GetSection("Engine").Bind(engineSettings);
+                    });
 
             services.AddApplicationInsightsTelemetry();
             services.AddControllers();
@@ -44,6 +61,10 @@ namespace red.gaius.brightbronze.discord
                     }
                 });
             });
+
+            services.AddSingleton<IDatastore, CosmosDB>();
+            services.AddSingleton<Cache>();
+            services.AddTransient<Engine>();
             services.AddHostedService<DiscordBot>();
         }
 
