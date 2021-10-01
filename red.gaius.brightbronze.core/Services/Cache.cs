@@ -5,7 +5,7 @@ using red.gaius.brightbronze.core.Models;
 
 namespace red.gaius.brightbronze.core.Services
 {
-    public partial class Cache
+    public partial class Cache : IDatastore
     {
         readonly IDatastore _datastore;
         readonly CacheSettings _settings;
