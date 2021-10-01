@@ -11,6 +11,7 @@ namespace red.gaius.brightbronze.core.Services
         {
             try
             {
+                userWallet.structure = "wallet";
                 ItemResponse<UserWallet> response =
                     await _cUsers.UpsertItemAsync<UserWallet>(userWallet,
                         new PartitionKey(userWallet.userId));
