@@ -7,7 +7,7 @@ namespace red.gaius.brightbronze.core.Services
     public partial class Engine
     {
         readonly ILogger<Engine> _logger;
-        EngineSettings _settings;
+        public readonly EngineSettings _settings;
         public readonly Cache _extData;
 
         public Engine(ILogger<Engine> logger,

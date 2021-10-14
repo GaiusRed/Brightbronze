@@ -9,6 +9,11 @@
     <PackageReference Include="Microsoft.Extensions.Logging" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="5.0.0" />
     <PackageReference Include="System.Runtime.Caching" Version="5.0.0" />
+    <PackageReference Include="YamlDotNet" Version="11.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Gamedata\**"  CopyToOutputDirectory="PreserveNewest"  />
   </ItemGroup>
 
 </Project>
