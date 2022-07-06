@@ -11,7 +11,6 @@ namespace red.gaius.brightbronze.core.Services
         {
             try
             {
-                serverInfo.structure = "info";
                 ItemResponse<ServerInfo> response =
                     await _cServers.UpsertItemAsync<ServerInfo>(serverInfo,
                         new PartitionKey(serverInfo.serverId));
