@@ -8,15 +8,9 @@ namespace red.gaius.brightbronze.core.Services
     {
         readonly ResourceManagerSettings _settings;
 
-        public readonly Dictionary<string, Quest> _quests;
-        public readonly Dictionary<string, QuestItem> _questItems;
-
         public ResourceManager(IOptions<ResourceManagerSettings> settings)
         {
             _settings = settings.Value;
-
-            _quests = new Dictionary<string, Quest>();
-            _questItems = new Dictionary<string, QuestItem>();
         }
     }
 }
