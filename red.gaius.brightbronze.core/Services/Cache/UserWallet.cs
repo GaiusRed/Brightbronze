@@ -18,7 +18,8 @@ namespace red.gaius.brightbronze.core.Services
             if (_cache[$"userInfo_{userId}"] == null)
             {
                 userWallet = await _datastore.GetUserWallet(userId);
-                _cache.Set($"userWallet_{userWallet.userId}", userWallet, GetPolicy());
+                if (userWallet != null)
+                    _cache.Set($"userWallet_{userWallet.userId}", userWallet, GetPolicy());
             }
             return userWallet;
         }

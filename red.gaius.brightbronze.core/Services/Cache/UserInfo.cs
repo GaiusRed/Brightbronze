@@ -18,7 +18,8 @@ namespace red.gaius.brightbronze.core.Services
             if (_cache[$"userInfo_{userId}"] == null)
             {
                 userInfo = await _datastore.GetUserInfo(userId);
-                _cache.Set($"userInfo_{userInfo.userId}", userInfo, GetPolicy());
+                if (userInfo != null)
+                    _cache.Set($"userInfo_{userInfo.userId}", userInfo, GetPolicy());
             }
             return userInfo;
         }

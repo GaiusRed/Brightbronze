@@ -18,7 +18,8 @@ namespace red.gaius.brightbronze.core.Services
             if (_cache[$"serverInfo_{serverId}"] == null)
             {
                 serverInfo = await _datastore.GetServerInfo(serverId);
-                _cache.Set($"serverInfo_{serverInfo.serverId}", serverInfo, GetPolicy());
+                if (serverInfo != null)
+                    _cache.Set($"serverInfo_{serverInfo.serverId}", serverInfo, GetPolicy());
             }
             return serverInfo;
         }
