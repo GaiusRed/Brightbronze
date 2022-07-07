@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using red.gaius.brightbronze.core.Models;
 using System.Collections.Generic;
+using System;
 
 namespace red.gaius.brightbronze.core.Services
 {
@@ -31,7 +32,7 @@ namespace red.gaius.brightbronze.core.Services
                                        $"upserted with DB id: { response.Value.id }");
                 return true;
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex, ex.Message);
                 return false;
@@ -49,7 +50,7 @@ namespace red.gaius.brightbronze.core.Services
                     _cUsers.GetItemQueryIterator<UserCharacter>(query))
                     characters.Add(UserCharacter);
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex, ex.Message);
             }
@@ -60,11 +61,15 @@ namespace red.gaius.brightbronze.core.Services
         {
             try
             {
+                List<UserCharacter> characters = await GetUserCharacters(character.userId);
+                if (characters.Count <= 1)
+                    throw new ApplicationException("Delete failed: at least one character required in roster.");
+
                 await _cUsers.DeleteItemAsync<UserCharacter>(
                     character.id, new PartitionKey(character.userId));
                 return true;
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex, ex.Message);
             }
