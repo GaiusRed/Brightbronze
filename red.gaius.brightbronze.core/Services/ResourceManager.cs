@@ -34,7 +34,7 @@ namespace red.gaius.brightbronze.core.Services
             {
                 List<Script> scripts = _yml.Deserialize<List<Script>>(
                     await File.ReadAllTextAsync(_pathScripts));
-                s = scripts.First(_ => _.name.Equals(scriptName)).script;
+                s = scripts.First(_ => _.name.Equals(scriptName)).value;
             }
             catch (System.Exception ex)
             {
