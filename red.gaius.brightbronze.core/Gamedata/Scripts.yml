@@ -1,7 +1,5 @@
-- id: dc6f83b2-a8f5-4935-9efc-cca7ca1e336f
-  name: ServerOnboardFail
+- name: ServerOnboardFail
   script: Sorry, but you cannot play the Brightbronze Idle RPG on this server.
 
-- id: 448ec14c-bdc2-4733-b5d0-d29097de68e7
-  name: UserOnboardFail
+- name: UserOnboardFail
   script: Sorry, but Brightbronze Idle RPG is unable to register your Discord user.
