@@ -15,7 +15,6 @@ namespace red.gaius.brightbronze.core.Services
         readonly ILogger<ResourceManager> _logger;
         readonly IDeserializer _yml;
 
-        readonly string _pathDir = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
         readonly string _pathScripts;
 
         public ResourceManager(IOptions<ResourceManagerSettings> settings, ILogger<ResourceManager> logger)
@@ -24,7 +23,8 @@ namespace red.gaius.brightbronze.core.Services
             _logger = logger;
             _yml = new DeserializerBuilder().Build();
 
-            _pathScripts = _pathDir + _settings.Path_ScriptsYml;
+            string pathDir = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
+            _pathScripts = pathDir + _settings.Path_ScriptsYml;
         }
 
         public async Task<string> GetScript(string scriptName)
