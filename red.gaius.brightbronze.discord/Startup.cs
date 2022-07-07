@@ -24,15 +24,15 @@ namespace red.gaius.brightbronze.discord
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddOptions<DiscordSettings>()
-                    .Configure<IConfiguration>((discordSettings, config) =>
-                    {
-                        config.GetSection("Discord").Bind(discordSettings);
-                    });
             services.AddOptions<CosmosDBSettings>()
                     .Configure<IConfiguration>((cosmosDBSettings, config) =>
                     {
                         config.GetSection("CosmosDB").Bind(cosmosDBSettings);
+                    });
+            services.AddOptions<ResourceManagerSettings>()
+                    .Configure<IConfiguration>((rmSettings, config) =>
+                    {
+                        config.GetSection("ResourceManager").Bind(rmSettings);
                     });
             services.AddOptions<CacheSettings>()
                     .Configure<IConfiguration>((cacheSettings, config) =>
@@ -43,6 +43,11 @@ namespace red.gaius.brightbronze.discord
                     .Configure<IConfiguration>((engineSettings, config) =>
                     {
                         config.GetSection("Engine").Bind(engineSettings);
+                    });
+            services.AddOptions<DiscordSettings>()
+                    .Configure<IConfiguration>((discordSettings, config) =>
+                    {
+                        config.GetSection("Discord").Bind(discordSettings);
                     });
 
             services.AddApplicationInsightsTelemetry();
@@ -63,6 +68,7 @@ namespace red.gaius.brightbronze.discord
             });
 
             services.AddSingleton<IDatastore, CosmosDB>();
+            services.AddSingleton<ResourceManager>();
             services.AddSingleton<Cache>();
             services.AddTransient<Engine>();
             services.AddHostedService<DiscordBot>();

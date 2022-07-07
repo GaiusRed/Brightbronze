@@ -25,7 +25,7 @@ namespace red.gaius.brightbronze.discord.Services.Modules
                 await ReplyAsync("You are currently not in a server.");
                 return;
             }
-            if (!await _engine._extData.ServerInfoExists(Context.Guild.Id.ToString()))
+            if (!await _engine.data.ServerInfoExists(Context.Guild.Id.ToString()))
             {
                 _logger.LogTrace("New server; onboarding...");
                 core.Models.ServerInfo newServer = new core.Models.ServerInfo()
@@ -35,14 +35,14 @@ namespace red.gaius.brightbronze.discord.Services.Modules
                     name = Context.Guild.Name,
                     ownerUserId = Context.Guild.OwnerId.ToString()
                 };
-                if (!await _engine._extData.SetServerInfo(newServer))
+                if (!await _engine.data.SetServerInfo(newServer))
                 {
                     _logger.LogWarning("Unable to onboard new server."); // Add context
-                    await ReplyAsync("Sorry, but you cannot play the Brightbronze Idle RPG on this server.");
+                    await ReplyAsync(await _engine.data.GetScript("ServerOnboardFail"));
                     return;
                 }
             }
-            if (!await _engine._extData.UserInfoExists(Context.User.Id.ToString()))
+            if (!await _engine.data.UserInfoExists(Context.User.Id.ToString()))
             {
                 _logger.LogTrace("New user; onboarding...");
                 core.Models.UserInfo newUser = new core.Models.UserInfo()
@@ -52,13 +52,31 @@ namespace red.gaius.brightbronze.discord.Services.Modules
                     name = Context.User.Username,
                     discriminator = Context.User.Discriminator
                 };
-                if (!await _engine._extData.SetUserInfo(newUser))
+                if (!await _engine.data.SetUserInfo(newUser))
                 {
                     _logger.LogWarning("Unable to onboard new user."); // Add context
-                    await ReplyAsync("Sorry, but Brightbronze Idle RPG is unable to register your Discord user.");
+                    await ReplyAsync(await _engine.data.GetScript("UserOnboardFail"));
                     return;
                 }
             }
+            if (!await _engine.data.UserCharactersExist(Context.User.Id.ToString()))
+            {
+                _logger.LogTrace("User has no characters in roster; starting story via DM...");
+                await Context.Message.DeleteAsync();
+                Onboard();
+                return;
+            }
+            ShowMenu();
+        }
+
+        private void Onboard()
+        {
+            // TODO: Onboard via PM
+        }
+
+        private void ShowMenu()
+        {
+            // TODO: Show Game Menu
         }
     }
 }

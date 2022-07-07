@@ -7,15 +7,17 @@ namespace red.gaius.brightbronze.core.Services
 {
     public partial class Cache : IDatastore
     {
-        readonly IDatastore _datastore;
         readonly CacheSettings _settings;
+        readonly IDatastore _datastore;
+        readonly ResourceManager _resources;
 
         readonly ObjectCache _cache;
 
-        public Cache(IOptions<CacheSettings> settings, IDatastore datastore)
+        public Cache(IOptions<CacheSettings> settings, IDatastore datastore, ResourceManager resourceManager)
         {
             _settings = settings.Value;
             _datastore = datastore;
+            _resources = resourceManager;
 
             _cache = MemoryCache.Default;
         }
@@ -26,6 +28,11 @@ namespace red.gaius.brightbronze.core.Services
             {
                 AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(_settings.ExpiryInMinutes)
             };
+        }
+
+        public void Flush()
+        {
+            MemoryCache.Default.Dispose();
         }
     }
 }

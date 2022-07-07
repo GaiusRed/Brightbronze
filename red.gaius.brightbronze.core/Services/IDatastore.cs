@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using red.gaius.brightbronze.core.Models;
 
@@ -14,5 +15,9 @@ namespace red.gaius.brightbronze.core.Services
         Task<bool> SetUserWallet(UserWallet userWallet);
         Task<UserWallet> GetUserWallet(string userId);
         Task<bool> DeleteUser(string userId);
+
+        Task<bool> SetUserCharacter(UserCharacter UserCharacter);
+        Task<List<UserCharacter>> GetUserCharacters(string userId);
+        Task<bool> DeleteUserCharacter(UserCharacter character);
     }
 }
