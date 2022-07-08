@@ -37,7 +37,12 @@ namespace red.gaius.brightbronze.discord.Services.Modules
                 };
                 if (!await _engine.data.SetServerInfo(newServer))
                 {
-                    _logger.Warning("Unable to onboard new server."); // Add context
+                    _logger
+                        .ForContext("New Server Id", newServer.id)
+                        .ForContext("New Server Discord Id", newServer.serverId)
+                        .ForContext("New Server Name", newServer.name)
+                        .ForContext("New Server Discord Owner Id", newServer.ownerUserId)
+                        .Warning("Unable to onboard new server.");
                     await ReplyAsync(await _engine.data.GetScript("ServerOnboardFail"));
                     return;
                 }
@@ -54,7 +59,12 @@ namespace red.gaius.brightbronze.discord.Services.Modules
                 };
                 if (!await _engine.data.SetUserInfo(newUser))
                 {
-                    _logger.Warning("Unable to onboard new user."); // Add context
+                    _logger
+                        .ForContext("New User Id", newUser.id)
+                        .ForContext("New User Discord Id", newUser.userId)
+                        .ForContext("New User Discord Name", newUser.name)
+                        .ForContext("New User Discord Discriminator", newUser.discriminator)
+                        .Warning("Unable to onboard new user.");
                     await ReplyAsync(await _engine.data.GetScript("UserOnboardFail"));
                     return;
                 }
