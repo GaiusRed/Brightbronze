@@ -26,22 +26,5 @@ namespace red.gaius.brightbronze.core.Services
             string pathDir = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
             _pathScripts = pathDir + _settings.Path_ScriptsYml;
         }
-
-        public async Task<string> GetScript(string scriptName)
-        {
-            string s = string.Empty;
-            try
-            {
-                List<Script> scripts = _yml.Deserialize<List<Script>>(
-                    await File.ReadAllTextAsync(_pathScripts));
-                s = scripts.First(_ => _.name.Equals(scriptName)).value;
-            }
-            catch (System.Exception ex)
-            {
-                _logger.LogError(ex, ex.Message);
-                s = string.Empty;
-            }
-            return s;
-        }
     }
 }
