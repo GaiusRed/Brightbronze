@@ -1,13 +1,13 @@
 using Azure.Cosmos;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using red.gaius.brightbronze.core.Models;
+using Serilog;
 
 namespace red.gaius.brightbronze.core.Services
 {
     public partial class CosmosDB : IDatastore
     {
-        readonly ILogger<CosmosDB> _logger;
+        readonly ILogger _logger;
         readonly CosmosDBSettings _settings;
         readonly CosmosClient _client;
 
@@ -17,7 +17,7 @@ namespace red.gaius.brightbronze.core.Services
         const string containerName_User = "users";
         readonly CosmosContainer _cUsers;
 
-        public CosmosDB(ILogger<CosmosDB> logger, IOptions<CosmosDBSettings> settings)
+        public CosmosDB(ILogger logger, IOptions<CosmosDBSettings> settings)
         {
             _logger = logger;
             _settings = settings.Value;

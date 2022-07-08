@@ -1,5 +1,4 @@
 using Azure.Cosmos;
-using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using red.gaius.brightbronze.core.Models;
 
@@ -21,7 +20,7 @@ namespace red.gaius.brightbronze.core.Services
             }
             catch (System.Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
+                _logger.Error(ex, ex.Message);
                 return false;
             }
         }

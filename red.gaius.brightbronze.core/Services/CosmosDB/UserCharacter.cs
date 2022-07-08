@@ -1,5 +1,4 @@
 using Azure.Cosmos;
-using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using red.gaius.brightbronze.core.Models;
 using System.Collections.Generic;
@@ -20,7 +19,7 @@ namespace red.gaius.brightbronze.core.Services
                 if (dupeNickname)
                 {
                     // Add Context
-                    _logger.LogInformation(
+                    _logger.Information(
                         "Unable to create UserCharacter due to duplicate nickname within User's roster.");
                     return false;
                 }
@@ -28,13 +27,13 @@ namespace red.gaius.brightbronze.core.Services
                 ItemResponse<UserCharacter> response =
                     await _cUsers.UpsertItemAsync<UserCharacter>(character,
                         new PartitionKey(character.userId));
-                _logger.LogInformation($"UserCharacter for { character.userId } successfully " +
-                                       $"upserted with DB id: { response.Value.id }");
+                _logger.Information($"UserCharacter for { character.userId } successfully " +
+                                    $"upserted with DB id: { response.Value.id }");
                 return true;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
+                _logger.Error(ex, ex.Message);
                 return false;
             }
         }
@@ -52,7 +51,7 @@ namespace red.gaius.brightbronze.core.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
+                _logger.Error(ex, ex.Message);
             }
             return characters;
         }
@@ -71,7 +70,7 @@ namespace red.gaius.brightbronze.core.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
+                _logger.Error(ex, ex.Message);
             }
             return false;
         }

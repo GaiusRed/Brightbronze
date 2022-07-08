@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
 using red.gaius.brightbronze.core.Models;
 
 namespace red.gaius.brightbronze.core.Services
@@ -20,7 +19,7 @@ namespace red.gaius.brightbronze.core.Services
             }
             catch (System.Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
+                _logger.Error(ex, ex.Message);
                 s = string.Empty;
             }
             return s;

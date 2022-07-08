@@ -6,19 +6,19 @@ using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Serilog;
 using red.gaius.brightbronze.discord.Models;
 
 namespace red.gaius.brightbronze.discord.Services
 {
     public class DiscordBot : BackgroundService
     {
-        readonly ILogger<DiscordBot> _logger;
+        readonly ILogger _logger;
         readonly DiscordSettings _settings;
         readonly DiscordSocketClient _client;
         public DiscordBot(IServiceProvider services,
-                          ILogger<DiscordBot> logger,
+                          ILogger logger,
                           IOptions<DiscordSettings> settings)
         {
             _logger = logger;
@@ -28,17 +28,17 @@ namespace red.gaius.brightbronze.discord.Services
             _client.Log += (log) =>
             {
                 if (log.Severity == LogSeverity.Critical)
-                    _logger.LogCritical(log.Exception, log.Message);
+                    _logger.Fatal(log.Exception, log.Message);
                 if (log.Severity == LogSeverity.Debug)
-                    _logger.LogDebug(log.Exception, log.Message);
+                    _logger.Debug(log.Exception, log.Message);
                 if (log.Severity == LogSeverity.Error)
-                    _logger.LogError(log.Exception, log.Message);
+                    _logger.Error(log.Exception, log.Message);
                 if (log.Severity == LogSeverity.Info)
-                    _logger.LogInformation(log.Exception, log.Message);
+                    _logger.Information(log.Exception, log.Message);
                 if (log.Severity == LogSeverity.Verbose)
-                    _logger.LogTrace(log.Exception, log.Message);
+                    _logger.Verbose(log.Exception, log.Message);
                 if (log.Severity == LogSeverity.Warning)
-                    _logger.LogWarning(log.Exception, log.Message);
+                    _logger.Warning(log.Exception, log.Message);
                 return Task.CompletedTask;
             };
 

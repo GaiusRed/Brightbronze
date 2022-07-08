@@ -1,15 +1,15 @@
-﻿using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 using red.gaius.brightbronze.core.Models;
+using Serilog;
 
 namespace red.gaius.brightbronze.core.Services
 {
     public partial class Engine
     {
-        readonly ILogger<Engine> _logger;
+        readonly ILogger _logger;
         readonly EngineSettings _settings;
 
-        public Engine(ILogger<Engine> logger,
+        public Engine(ILogger logger,
                       IOptions<EngineSettings> settings,
                       Cache cache)
         {

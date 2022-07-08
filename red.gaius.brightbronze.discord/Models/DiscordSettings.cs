@@ -1,5 +1,3 @@
-using System;
-
 namespace red.gaius.brightbronze.discord.Models
 {
     public class DiscordSettings

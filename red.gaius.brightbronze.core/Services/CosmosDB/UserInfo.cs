@@ -1,5 +1,4 @@
 using Azure.Cosmos;
-using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using red.gaius.brightbronze.core.Models;
 
@@ -14,13 +13,13 @@ namespace red.gaius.brightbronze.core.Services
                 ItemResponse<UserInfo> response =
                     await _cUsers.UpsertItemAsync<UserInfo>(userInfo,
                         new PartitionKey(userInfo.userId));
-                _logger.LogInformation($"UserInfo for { userInfo.userId } successfully " +
-                                       $"upserted with DB id: { response.Value.id }");
+                _logger.Information($"UserInfo for { userInfo.userId } successfully " +
+                                    $"upserted with DB id: { response.Value.id }");
                 return true;
             }
             catch (System.Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
+                _logger.Error(ex, ex.Message);
                 return false;
             }
         }
@@ -37,7 +36,7 @@ namespace red.gaius.brightbronze.core.Services
             }
             catch (System.Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
+                _logger.Error(ex, ex.Message);
             }
             return null;
         }

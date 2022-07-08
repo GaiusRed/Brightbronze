@@ -1,7 +1,7 @@
 using System;
 using System.Reflection;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using Serilog;
 using red.gaius.brightbronze.discord.Models;
 
 namespace red.gaius.brightbronze.discord.Controllers
@@ -10,9 +10,9 @@ namespace red.gaius.brightbronze.discord.Controllers
     [Route("[controller]")]
     public class TestController : ControllerBase
     {
-        private readonly ILogger<TestController> _logger;
+        private readonly ILogger _logger;
 
-        public TestController(ILogger<TestController> logger)
+        public TestController(ILogger logger)
         {
             _logger = logger;
         }
