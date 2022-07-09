@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Discord;
 using Discord.Commands;
 using Serilog;
 
@@ -79,9 +80,32 @@ namespace red.gaius.brightbronze.discord.Services.Modules
             ShowMenu();
         }
 
-        private void Onboard()
+        private async void Onboard()
         {
-            // TODO: Onboard via PM
+            var welcome = new EmbedBuilder(){
+                Color = Color.Red,
+                Title = await _engine.data.GetScript("NewPlayerTitle"),
+                Fields = new System.Collections.Generic.List<EmbedFieldBuilder>(){
+                    new EmbedFieldBuilder() {
+                        Name = await _engine.data.GetScript("NewPlayerField1Name"),
+                        Value = await _engine.data.GetScript("NewPlayerField1Value")
+                    },
+                    new EmbedFieldBuilder() {
+                        Name = await _engine.data.GetScript("NewPlayerField2Name"),
+                        Value = await _engine.data.GetScript("NewPlayerField2Value")
+                    },
+                    new EmbedFieldBuilder() {
+                        Name = await _engine.data.GetScript("NewPlayerField3Name"),
+                        Value = await _engine.data.GetScript("NewPlayerField3Value")
+                    }
+                },
+                Footer = new EmbedFooterBuilder(){
+                    IconUrl = Context.Client.CurrentUser.GetAvatarUrl(),
+                    Text = await _engine.data.GetScript("NewPlayerFooter")
+                }
+            }.Build();
+            var dm = await Context.User.CreateDMChannelAsync();
+            await dm.SendMessageAsync(embed: welcome);
         }
 
         private void ShowMenu()

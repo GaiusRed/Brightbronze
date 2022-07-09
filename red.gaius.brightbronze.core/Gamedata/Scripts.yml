@@ -1,5 +1,29 @@
 - name: ServerOnboardFail
-  script: Sorry, but you cannot play the Brightbronze Idle RPG on this server.
+  value: Sorry, but you cannot play the Brightbronze Idle RPG on this server.
 
 - name: UserOnboardFail
-  script: Sorry, but Brightbronze Idle RPG is unable to register your Discord user.
+  value: Sorry, but Brightbronze Idle RPG is unable to register your Discord user.
+
+- name: NewPlayerTitle
+  value: ⚔️ Welcome to the Brightbronze Idle RPG!
+
+- name: NewPlayerField1Name
+  value: i. No commands to remember
+
+- name: NewPlayerField1Value
+  value: To start playing the game, just type `.menu` at any server where the bot is active. Other commands are optional to learn & can be called via the menu anyway.
+
+- name: NewPlayerField2Name
+  value: ii. Same account everywhere
+
+- name: NewPlayerField2Value
+  value: Each server has randomized shops and rifts that periodically refreshes, but your characters, teams and armory are bound to your discord account.
+
+- name: NewPlayerField3Name
+  value: iii. Grow your guild
+
+- name: NewPlayerField3Value
+  value: Earn coin by making your adventurer teams do quests. Buy and forge equipment to build up your armory until you can start delving thru inter-dimensional rifts!
+
+- name: NewPlayerFooter
+  value: Your journey begins now...
